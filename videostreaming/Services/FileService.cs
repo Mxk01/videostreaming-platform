@@ -18,8 +18,10 @@ namespace videostreaming.Services
             {
                 var wwwPath = this.environment.WebRootPath;
                 var path = Path.Combine(wwwPath, "Uploads");
+                //  check if upload folder exists
                 if (!Directory.Exists(path))
                 {
+                    // if it doesn't create a directory with that path
                     Directory.CreateDirectory(path);
                 }
 
@@ -28,9 +30,11 @@ namespace videostreaming.Services
                 var allowedExtensions = new string[] { ".jpg", ".png", ".jpeg" };
                 if (!allowedExtensions.Contains(ext))
                 {
+                    // returns a tuple in case user has entered an invalid format
                     string msg = string.Format("Only {0} extensions are allowed", string.Join(",", allowedExtensions));
                     return new Tuple<int, string>(0, msg);
                 }
+
                 string uniqueString = Guid.NewGuid().ToString();
                 var newFileName = uniqueString + ext;
                 var fileWithPath = Path.Combine(path, newFileName);
